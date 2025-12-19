@@ -12,7 +12,7 @@ public class JavaCrud {
 
         var sql = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "nome TEXT NOT NULL, "
+                + "name TEXT NOT NULL, "
                 + "email TEXT NOT NULL UNIQUE, "
                 + "phone_num TEXT"
                 + ");";
@@ -35,14 +35,35 @@ public class JavaCrud {
         }
     }
 
-    protected static void insertData(){
+    protected static void insertData(String name, String email, String phone_num){
 
         String url = "jdbc:sqlite:data.db";
 
+        final String INSERT_SQL = "INSERT INTO users(name, email, phone_num) VALUES(?,?,?)";
+
+        try (var conn = DriverManager.getConnection(url);
+         var ps = conn.prepareStatement(INSERT_SQL)) {
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, phone_num);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
 
     public static void main(String[] args) {
 
         connect();
+        insertData(
+                "Test",
+                "Test@email.com",
+                "555-555-555"
+        );
+
     }
 }
