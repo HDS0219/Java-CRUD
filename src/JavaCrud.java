@@ -1,6 +1,7 @@
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class JavaCrud {
     
@@ -103,6 +104,25 @@ public class JavaCrud {
     }
 }
 
+    protected static void deleteData(int id){
+    String url = "jdbc:sqlite:data.db";
+
+    final String DELETE_SQL = "DELETE FROM users WHERE ID = ?";
+
+    try(var conn = DriverManager.getConnection(url);
+        var ps = conn.prepareStatement(DELETE_SQL)){
+
+        ps.setInt(1, id);
+
+        int rowsAffected = ps.executeUpdate();
+
+        System.out.println("Rows deleted: " + rowsAffected);
+
+    } catch (SQLException e){
+        System.out.println(e.getMessage());
+    }
+}
+
 
 
     public static void main(String[] args) {
@@ -130,7 +150,20 @@ public class JavaCrud {
         );
          */
 
+
+        /*
         selectData();
+
+        deleteData(1);
+        */
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("1");
+        System.out.println("2");
+        System.out.println("3");
+        System.out.println("4");
+        System.out.println("5");
 
     }
 }
