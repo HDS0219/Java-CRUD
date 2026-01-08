@@ -125,45 +125,94 @@ public class JavaCrud {
 
 
 
+
+
     public static void main(String[] args) {
 
-        // Initialize the database and ensure the table exists
-        connect();
+    // Initialize the database and ensure the table exists
+    connect();
 
-        // Used only for manual testing
-        /*
-        insertData(
-                "Test",
-                "Test@email.com",
-                "555-555-555"
-        );
+    Scanner sc = new Scanner(System.in);
+    int option = 0;
 
-         */
+    while (option != 5) {
+        System.out.println("\n===== USER CRUD MENU =====");
+        System.out.println("1 - INSERT A NEW USER");
+        System.out.println("2 - DELETE A USER");
+        System.out.println("3 - UPDATE USER");
+        System.out.println("4 - SEE ALL USERS");
+        System.out.println("5 - EXIT");
+        System.out.print("Choose an option: ");
 
-        // Updates an existing record (example usage)
-        /*
-        updateData(
-                "Teste1",
-                "teste2@gmail.com",
-                "555-555-555-2",
-                1
-        );
-         */
+        option = sc.nextInt();
+        sc.nextLine(); // consume newline
 
+        switch (option) {
 
-        /*
-        selectData();
+            case 1: {
+                System.out.println("\n--- INSERT NEW USER ---");
+                System.out.print("Enter name: ");
+                String name = sc.nextLine();
 
-        deleteData(1);
-        */
+                System.out.print("Enter email: ");
+                String email = sc.nextLine();
 
-        Scanner sc = new Scanner(System.in);
+                System.out.print("Enter phone number: ");
+                String phone = sc.nextLine();
 
-        System.out.println("1");
-        System.out.println("2");
-        System.out.println("3");
-        System.out.println("4");
-        System.out.println("5");
+                insertData(name, email, phone);
+                System.out.println("✓ User inserted successfully!");
+                break;
+            }
 
+            case 2: {
+                System.out.println("\n--- DELETE USER ---");
+                selectData();
+                System.out.println("");
+                System.out.print("Enter user ID to delete: ");
+                int id = sc.nextInt();
+                sc.nextLine();
+
+                deleteData(id);
+                System.out.println("✓ User deleted successfully!");
+                break;
+            }
+
+            case 3: {
+                System.out.print("Enter user ID to update: ");
+                int id = sc.nextInt();
+                sc.nextLine();
+
+                System.out.print("New name: ");
+                String name = sc.nextLine();
+
+                System.out.print("New email: ");
+                String email = sc.nextLine();
+
+                System.out.print("New phone number: ");
+                String phone = sc.nextLine();
+
+                updateData(name, email, phone, id);
+                System.out.println("✓ User updated successfully!");
+                break;
+            }
+
+            case 4: {
+                System.out.println("\n--- USER LIST ---");
+                selectData();
+                break;
+            }
+
+            case 5:
+                System.out.println("\n✓ Goodbye! Exiting system...");
+                break;
+
+            default:
+                System.out.println("\n✗ Invalid option! Please choose between 1 and 5.");
+        }
     }
+
+    sc.close();
+}
+
 }
